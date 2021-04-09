@@ -58,8 +58,20 @@ body {
   }
 }
 
+#hourlyWeather {
+  display: flex;
+  width: 70%;
+  overflow-x: scroll;
+
+  & > * {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}
+
 @media screen and (max-width: 500px){
-  .container #units {
+  .container #units,
+  #hourlyWeather {
     width: 100%;
   }
 }

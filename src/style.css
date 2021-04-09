@@ -44,8 +44,18 @@ body {
 .container #units button {
   flex-grow: 1;
 }
+#hourlyWeather {
+  display: flex;
+  width: 70%;
+  overflow-x: scroll;
+}
+#hourlyWeather > * {
+  padding-left: 50px;
+  padding-right: 50px;
+}
 @media screen and (max-width: 500px) {
-  .container #units {
+  .container #units,
+  #hourlyWeather {
     width: 100%;
   }
 }
