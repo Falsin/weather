@@ -1,5 +1,72 @@
+.size(@width, @height) {
+  width: @width;
+  height: @height;
+}
+
+* {
+  border: solid red 1px;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
 html, body {
   height: 100%;
   width: 100%;
-  background: orange;
+  background: #ffa500;
+}
+
+body {
+  font-size: 16px;
+}
+
+.container {
+  padding-left: 5vmin;
+  padding-right: 5vmin;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container #searchBox {
+  border: solid green 1px;
+  width: 50%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+
+  & input {
+    flex-grow: 1;
+    min-width: 0;
+    padding-left: 1vmin;
+  }
+
+  & button {
+    padding: 1vmin;
+  }
+}
+
+.container #siteHeadline {
+  width: 30vmin;
+}
+
+.container #units {
+  width: 10vmin;
+  display: flex;
+
+  & button {
+    flex-grow: 1;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .container #units {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 300px){
+  .container #siteHeadline,
+  .container #searchBox {
+    width: 100%;
+  }
 }
