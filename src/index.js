@@ -3,11 +3,12 @@ import createElem from 'create-html-node'
 
 const input = document.querySelector('input');
 const btn = document.querySelector('button');
-
 const todayWeather = document.getElementById('todayWeather');
 
 
-btn.addEventListener('mousedown', () => processingRequest(input.value))
+btn.addEventListener('mousedown', () => {
+  processingRequest(input.value);
+})
 
 window.onload = () => processingRequest('London');
 
@@ -17,7 +18,10 @@ function processingRequest(currentCityName) {
       return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${response.lat}&lon=${response.lon}&appid=7583fd4c80f1f8e75fe03f14d121ece0`, {mode: 'cors'})
     })
     .then(response => response.json())
-    .then(response => addInfoIntoTheSite(response, currentCityName))
+    .then(response => {
+      deleteInfoFromTheSite()
+      addInfoIntoTheSite(response, currentCityName);
+    })
 }
 
 function returnCityCoord(currentCityName) {
@@ -40,84 +44,25 @@ function setTodayWeather(currentWeather, hourlyWeather, currentCityName) {
   mainWeather.textContent = currentWeather.weather[0].main;
   temp.textContent = currentWeather.temp;
 
+  createWeatherCell(hourlyWeatherBlock, 'Now', currentWeather, currentWeather.temp)
 
   for (let i = 0; i < 24; i++) {
-    const elem = createElem(hourlyWeatherBlock, 'div', 'Hello!')
+    const hour = new Date(hourlyWeather[i].dt * 1000).getHours();
+    const temp = hourlyWeather[i].temp;
+    createWeatherCell(hourlyWeatherBlock, hour, hourlyWeather[i], hourlyWeather[i].temp)
   }
-  //console.log(hourlyWeather)
-/*   hourlyWeather.forEach(element => {
-    console.log(new Date(element.dt * 1000).getHours())
-  }); */
 }
 
-
-
-/* window.onload = () => {
-  const currentCityName = 'London';
-  fetch(`http://api.openweathermap.org/data/2.5/weather?q=${currentCityName}&appid=7583fd4c80f1f8e75fe03f14d121ece0`, {mode: 'cors'})
-  .then(response => response.json())
-  .then(response => {
-    let coord = {
-      lat: response.coord.lat,
-      lon: response.coord.lon,
-    };
-    return coord;
-  })
-  .then(response => {
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${response.lat}&lon=${response.lon}&appid=7583fd4c80f1f8e75fe03f14d121ece0`, {mode: 'cors'})
-    .then(response => {
-      return response.json()
-    })
-    .then(response => {
-      cityName.textContent = currentCityName;
-      console.log(response)
-    })
-  })
-} */
-
-/* btn.addEventListener('mousedown', () => {
-  showCityIntoConsole()
-})
-
-function showCityIntoConsole(params) {
-  const cityName = input.value;
-  fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=7583fd4c80f1f8e75fe03f14d121ece0`, {mode: 'cors'})
-  .then(response => response.json())
-  .then(response => {
-    let coord = {
-      lat: response.coord.lat,
-      lon: response.coord.lon,
-    };
-    return coord;
-  })
-  .then(response => {
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${response.lat}&lon=${response.lon}&appid=7583fd4c80f1f8e75fe03f14d121ece0`, {mode: 'cors'})
-    .then(response => {
-      console.log(response.json());
-    })
-  })
+function createWeatherCell(parentElem, hour, array, temp) {
+  const elem = createElem(parentElem, 'div', 'class:weatherIcons');
+  createElem(elem, 'div', `${hour}`);
+  const weatherImg = createElem(elem, 'div', 'class:weatherImg');
+  weatherImg.style.backgroundImage = `url(http://openweathermap.org/img/wn/${array.weather[0].icon}@2x.png)`
+  createElem(elem, 'div', `${temp}`);
 }
 
-window.onload = () => {
-  fetch('http://api.openweathermap.org/data/2.5/weather?q=London&appid=7583fd4c80f1f8e75fe03f14d121ece0', {mode: 'cors'})
-  .then(response => response.json())
-  .then(response => {
-    let coord = {
-      lat: response.coord.lat,
-      lon: response.coord.lon,
-    };
-    return coord;
-  })
-  .then(response => {
-    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${response.lat}&lon=${response.lon}&appid=7583fd4c80f1f8e75fe03f14d121ece0`, {mode: 'cors'})
-    .then(response => {
-      let answer = response.json();
-      console.log(answer);
-      return answer;
-    })
-    .then(response => {
-      let currentDate = new Date(response.current.dt * 1000);
-      console.log(currentDate)
-    })
-  })
-} */
+function deleteInfoFromTheSite() {
+  const weatherIcons = todayWeather.querySelectorAll('.weatherIcons');
+
+  weatherIcons.forEach(elem => elem.remove())
+}

@@ -53,6 +53,12 @@ body {
   padding-left: 50px;
   padding-right: 50px;
 }
+.weatherImg {
+  width: 60px;
+  height: 60px;
+  background-position: center center;
+  background-size: contain;
+}
 @media screen and (max-width: 500px) {
   .container #units,
   #hourlyWeather {
