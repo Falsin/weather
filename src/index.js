@@ -1,11 +1,12 @@
 import './style.less';
 import createElem from 'create-html-node'
 import setTodayWeather from './tuneTodayWeatherBlock'
+import setCommonInfo from './setCommonInfo'
 
 const input = document.querySelector('input');
 const btn = document.querySelector('button');
 const todayWeather = document.getElementById('todayWeather');
-const commonInfo = document.getElementById('commonInfo');
+const dailyWeather = document.getElementById('dailyWeather');
 
 
 btn.addEventListener('mousedown', () => {
@@ -33,26 +34,39 @@ function returnCityCoord(currentCityName) {
 }
 
 function addInfoIntoTheSite(obj, currentCityName) {
-  //console.log(obj);
-  setTodayWeather(obj.current, obj.hourly, currentCityName)
-  setCommonInfo(obj.current)
+  console.log(obj);
+  setTodayWeather(obj.current, obj.hourly, currentCityName);
+  setCommonInfo(obj.current);
+  setDailyWeather(obj.daily)
+}
+
+function setDailyWeather(array) {
+  const daysArray = [
+    'Sunday', 
+    'Monday', 
+    'Tuesday', 
+    'Wednesday', 
+    'Thursday', 
+    'Friday', 
+    'Saturday'
+  ]
+
+  for (let i = 1; i < array.length; i++) {
+    const table = dailyWeather.querySelector('table');
+    const dayLine = createElem(table, 'tr');
+    createElem(dayLine, 'td', `${daysArray[new Date(array[i].dt * 1000).getDay()]}`);
+    const weatherIcon = createElem(dayLine, 'td');
+    //console.log(array[i].weather[0].icon)
+    weatherIcon.style.backgroundImage = `url(http://openweathermap.org/img/wn/${array[i].weather[0].icon}@2x.png)`
+
+    for (let i = 0; i < 2; i++) {
+      const element = createElem(dayLine, 'td', 'Hello!');
+    }
+  }
 }
 
 function deleteInfoFromTheSite() {
   const weatherIcons = todayWeather.querySelectorAll('.weatherIcons');
 
   weatherIcons.forEach(elem => elem.remove())
-}
-
-function setCommonInfo(obj) {
-  const commonInfoElements = commonInfo.querySelectorAll('.commonInfoElement');
-
-  obj.sunrise = `${new Date(obj.sunrise * 1000).getHours()}:${new Date(obj.sunrise * 1000).getMinutes()}`;
-  obj.sunset = `${new Date(obj.sunset * 1000).getHours()}:${new Date(obj.sunset * 1000).getMinutes()}`;
-  obj.visibility = `${obj.visibility / 1000}`;
-
-  for (let i = 0; i < commonInfoElements.length; i++) {
-    const childElem = createElem(commonInfoElements[i], 'span');
-    childElem.textContent = `${obj[commonInfoElements[i].id]} ${commonInfoElements[i].dataset.inits || ''}`;
-  }
 }

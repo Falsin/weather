@@ -71,6 +71,9 @@ body {
 #commonInfo .container > div > div {
   width: 17vmin;
 }
+#dailyWeather .container table {
+  width: 100%;
+}
 @media screen and (max-width: 540px) {
   .container #units,
   #hourlyWeather {
