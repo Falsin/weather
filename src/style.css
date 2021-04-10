@@ -14,6 +14,7 @@ body {
   font-size: 16px;
 }
 .container {
+  border: solid green 1px;
   padding-left: 5vmin;
   padding-right: 5vmin;
   display: flex;
@@ -59,10 +60,28 @@ body {
   background-position: center center;
   background-size: contain;
 }
-@media screen and (max-width: 500px) {
+#commonInfo .container {
+  display: flex;
+  flex-direction: column;
+}
+#commonInfo .container > div {
+  display: flex;
+  justify-content: space-evenly;
+}
+#commonInfo .container > div > div {
+  width: 17vmin;
+}
+@media screen and (max-width: 540px) {
   .container #units,
   #hourlyWeather {
     width: 100%;
+  }
+  #commonInfo .container {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  #commonInfo .container div {
+    flex-direction: column;
   }
 }
 @media screen and (max-width: 300px) {

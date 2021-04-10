@@ -45,28 +45,14 @@ function deleteInfoFromTheSite() {
 }
 
 function setCommonInfo(obj) {
-  console.log(obj)
+  const commonInfoElements = commonInfo.querySelectorAll('.commonInfoElement');
 
-  const clouds = document.getElementById('clouds');
-  createElem(clouds, 'span', `${obj.clouds} %`);
+  obj.sunrise = `${new Date(obj.sunrise * 1000).getHours()}:${new Date(obj.sunrise * 1000).getMinutes()}`;
+  obj.sunset = `${new Date(obj.sunset * 1000).getHours()}:${new Date(obj.sunset * 1000).getMinutes()}`;
+  obj.visibility = `${obj.visibility / 1000}`;
 
-  const dewPoint = document.getElementById('dew_point');
-  createElem(dewPoint, 'span', `${obj.dew_point} K`);
-
-  const feelsLike = document.getElementById('feels_like');
-  createElem(feelsLike, 'span', `${obj.feels_like} K`);
-
-  const humidity = document.getElementById('humidity');
-  createElem(humidity, 'span', `${obj.humidity} %`);
-
-  const pressure = document.getElementById('pressure');
-  createElem(pressure, 'span', `${obj.pressure} hPa`);
-
-  const sunrise = document.getElementById('sunrise');
-  const timeSunrise = createElem(sunrise, 'span');
-  timeSunrise.textContent = `${new Date(obj.sunrise * 1000).getHours()}:${new Date(obj.sunrise * 1000).getMinutes()}`;
-
-  const sunset = document.getElementById('sunset');
-  const timeSunset = createElem(sunset, 'span');
-  timeSunset.textContent = `${new Date(obj.sunset * 1000).getHours()}:${new Date(obj.sunset * 1000).getMinutes()}`;
-} 
+  for (let i = 0; i < commonInfoElements.length; i++) {
+    const childElem = createElem(commonInfoElements[i], 'span');
+    childElem.textContent = `${obj[commonInfoElements[i].id]} ${commonInfoElements[i].dataset.inits || ''}`;
+  }
+}
