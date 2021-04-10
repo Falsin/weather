@@ -1,9 +1,11 @@
 import './style.less';
 import createElem from 'create-html-node'
+import setTodayWeather from './tuneTodayWeatherBlock'
 
 const input = document.querySelector('input');
 const btn = document.querySelector('button');
 const todayWeather = document.getElementById('todayWeather');
+const commonInfo = document.getElementById('commonInfo');
 
 
 btn.addEventListener('mousedown', () => {
@@ -33,32 +35,7 @@ function returnCityCoord(currentCityName) {
 function addInfoIntoTheSite(obj, currentCityName) {
   //console.log(obj);
   setTodayWeather(obj.current, obj.hourly, currentCityName)
-}
-
-function setTodayWeather(currentWeather, hourlyWeather, currentCityName) {
-  const cityName = todayWeather.querySelector('h2');
-  const temp = todayWeather.querySelector('.temp');
-  const hourlyWeatherBlock = document.getElementById('hourlyWeather');
-
-  cityName.textContent = currentCityName;
-  mainWeather.textContent = currentWeather.weather[0].main;
-  temp.textContent = currentWeather.temp;
-
-  createWeatherCell(hourlyWeatherBlock, 'Now', currentWeather, currentWeather.temp)
-
-  for (let i = 0; i < 24; i++) {
-    const hour = new Date(hourlyWeather[i].dt * 1000).getHours();
-    const temp = hourlyWeather[i].temp;
-    createWeatherCell(hourlyWeatherBlock, hour, hourlyWeather[i], hourlyWeather[i].temp)
-  }
-}
-
-function createWeatherCell(parentElem, hour, array, temp) {
-  const elem = createElem(parentElem, 'div', 'class:weatherIcons');
-  createElem(elem, 'div', `${hour}`);
-  const weatherImg = createElem(elem, 'div', 'class:weatherImg');
-  weatherImg.style.backgroundImage = `url(http://openweathermap.org/img/wn/${array.weather[0].icon}@2x.png)`
-  createElem(elem, 'div', `${temp}`);
+  setCommonInfo(obj.current)
 }
 
 function deleteInfoFromTheSite() {
@@ -66,3 +43,30 @@ function deleteInfoFromTheSite() {
 
   weatherIcons.forEach(elem => elem.remove())
 }
+
+function setCommonInfo(obj) {
+  console.log(obj)
+
+  const clouds = document.getElementById('clouds');
+  createElem(clouds, 'span', `${obj.clouds} %`);
+
+  const dewPoint = document.getElementById('dew_point');
+  createElem(dewPoint, 'span', `${obj.dew_point} K`);
+
+  const feelsLike = document.getElementById('feels_like');
+  createElem(feelsLike, 'span', `${obj.feels_like} K`);
+
+  const humidity = document.getElementById('humidity');
+  createElem(humidity, 'span', `${obj.humidity} %`);
+
+  const pressure = document.getElementById('pressure');
+  createElem(pressure, 'span', `${obj.pressure} hPa`);
+
+  const sunrise = document.getElementById('sunrise');
+  const timeSunrise = createElem(sunrise, 'span');
+  timeSunrise.textContent = `${new Date(obj.sunrise * 1000).getHours()}:${new Date(obj.sunrise * 1000).getMinutes()}`;
+
+  const sunset = document.getElementById('sunset');
+  const timeSunset = createElem(sunset, 'span');
+  timeSunset.textContent = `${new Date(obj.sunset * 1000).getHours()}:${new Date(obj.sunset * 1000).getMinutes()}`;
+} 
