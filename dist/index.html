@@ -25,7 +25,7 @@
       <div id="currentWeather">
         <h2></h2>
         <div id="mainWeather"></div>
-        <div class="temp"></div>
+        <div class="temp" data-units="K"></div>
       </div>
       <div id="hourlyWeather"></div>
     </div>
@@ -34,23 +34,23 @@
   <div id="commonInfo">
     <div class="container">
       <div>
-        <div id="clouds" class="commonInfoElement" data-inits="%">
+        <div id="clouds" class="commonInfoElement" data-units="%">
           <h4>Clouds</h4>
         </div>
 
-        <div id="dew_point" class="commonInfoElement" data-inits="K">
+        <div id="dew_point" class="commonInfoElement" data-units="K">
           <h4>Atmospheric temperature</h4>
         </div>
 
-        <div id="feels_like" class="commonInfoElement" data-inits="K">
+        <div id="feels_like" class="commonInfoElement" data-units="K">
           <h4>Feels like</h4>
         </div>
 
-        <div id="humidity" class="commonInfoElement" data-inits="%">
+        <div id="humidity" class="commonInfoElement" data-units="%">
           <h4>Humidity</h4>
         </div>
 
-        <div id="pressure" class="commonInfoElement" data-inits="hPa">
+        <div id="pressure" class="commonInfoElement" data-units="hPa">
           <h4>Pressure</h4>
         </div>
       </div>
@@ -69,11 +69,11 @@
           <h4>UV Index</h4>
         </div>
 
-        <div id="visibility" class="commonInfoElement" data-inits="km">
+        <div id="visibility" class="commonInfoElement" data-units="km">
           <h4>Visibility</h4>
         </div>
 
-        <div id="wind_speed" class="commonInfoElement" data-inits="m/s">
+        <div id="wind_speed" class="commonInfoElement" data-units="m/s">
           <h4>Wind speed</h4>
         </div>
       </div>
@@ -94,6 +94,10 @@
       </table>
     </div>
   </div>
+
+  <footer>
+    <a href="https://github.com/Falsin">Made by Falsin</a>
+  </footer>
 
   <script src="bundle.js"></script>
 </body>

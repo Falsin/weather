@@ -6,8 +6,6 @@
 }
 html,
 body {
-  height: 100%;
-  width: 100%;
   background: #ffa500;
 }
 body {
@@ -73,6 +71,10 @@ body {
 }
 #dailyWeather .container table {
   width: 100%;
+}
+#dailyWeather .container table img {
+  width: 10vmin;
+  height: 10vmin;
 }
 @media screen and (max-width: 540px) {
   .container #units,

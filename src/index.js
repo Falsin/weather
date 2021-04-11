@@ -1,12 +1,18 @@
 import './style.less';
-import createElem from 'create-html-node'
 import setTodayWeather from './tuneTodayWeatherBlock'
 import setCommonInfo from './setCommonInfo'
+import setDailyWeather from './setDailyWeatherBlock'
+
+
+const todayWeather = document.getElementById('todayWeather');
+const units = document.getElementById('units');
 
 const input = document.querySelector('input');
 const btn = document.querySelector('button');
-const todayWeather = document.getElementById('todayWeather');
-const dailyWeather = document.getElementById('dailyWeather');
+const btnUnits = units.querySelector('button');
+
+let modifiedObj;
+
 
 
 btn.addEventListener('mousedown', () => {
@@ -22,9 +28,39 @@ function processingRequest(currentCityName) {
     })
     .then(response => response.json())
     .then(response => {
+      modifiedObj = response;
+      
+
+      for (const key in modifiedObj.current) {
+        if (key == 'temp') {
+          console.log(true)
+        }
+        //console.log(key)
+      }
+
+      console.log(modifiedObj);
       deleteInfoFromTheSite()
       addInfoIntoTheSite(response, currentCityName);
     })
+}
+
+function rec(obj) {
+  for (const key in object) {
+    if (key == 'temp') {
+      if (typeof obj[key] != 'object') {
+        obj[key] = obj[key] + ' K';
+      } else {
+        for (const key in object) {
+          obj[key] = obj[key] + ' K';
+        }
+      }
+      
+    } else if (Array.isArray(obj[key])) {
+      for (const iterator of obj[key]) {
+        rec(iterator)
+      }
+    } 
+  }
 }
 
 function returnCityCoord(currentCityName) {
@@ -34,35 +70,9 @@ function returnCityCoord(currentCityName) {
 }
 
 function addInfoIntoTheSite(obj, currentCityName) {
-  console.log(obj);
   setTodayWeather(obj.current, obj.hourly, currentCityName);
   setCommonInfo(obj.current);
   setDailyWeather(obj.daily)
-}
-
-function setDailyWeather(array) {
-  const daysArray = [
-    'Sunday', 
-    'Monday', 
-    'Tuesday', 
-    'Wednesday', 
-    'Thursday', 
-    'Friday', 
-    'Saturday'
-  ]
-
-  for (let i = 1; i < array.length; i++) {
-    const table = dailyWeather.querySelector('table');
-    const dayLine = createElem(table, 'tr');
-    createElem(dayLine, 'td', `${daysArray[new Date(array[i].dt * 1000).getDay()]}`);
-    const weatherIcon = createElem(dayLine, 'td');
-    //console.log(array[i].weather[0].icon)
-    weatherIcon.style.backgroundImage = `url(http://openweathermap.org/img/wn/${array[i].weather[0].icon}@2x.png)`
-
-    for (let i = 0; i < 2; i++) {
-      const element = createElem(dayLine, 'td', 'Hello!');
-    }
-  }
 }
 
 function deleteInfoFromTheSite() {
@@ -70,3 +80,16 @@ function deleteInfoFromTheSite() {
 
   weatherIcons.forEach(elem => elem.remove())
 }
+
+btnUnits.addEventListener('mousedown', () => {
+  const tempArr = document.querySelectorAll('[data-units="K"]');
+/*   console.log(tempArr)
+
+  console.dir(btnUnits.textContent) */
+
+  if (btnUnits.textContent == 'K') {
+    btnUnits.textContent = '°C'
+  } else {
+    btnUnits.textContent = 'K'
+  }
+})
