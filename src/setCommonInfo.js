@@ -12,12 +12,9 @@ function setCommonInfo(obj) {
 
   for (let i = 0; i < commonInfoElements.length; i++) {
     const units = commonInfoElements[i].dataset.units || '';
-    const childElem = createElem(commonInfoElements[i], 'span');
-    childElem.textContent = `${obj[commonInfoElements[i].id]} ${units}`;
+    const childElem = createElem(commonInfoElements[i], 'span', 'class: temp');
+    childElem.textContent = `${obj[commonInfoElements[i].id]}`;
 
-    if (units == 'K') {
-      childElem.dataset.units = 'K';
-    }
   }
 
   //console.log(obj)

@@ -25,8 +25,8 @@ function setDailyWeather(array) {
     createElem(tableLine, 'td', `${array[i].humidity} %`);
 
     const tempBlock = createElem(tableLine, 'td');
-    createElem(tempBlock, 'div', `${array[i].temp.day} K`);
-    createElem(tempBlock, 'div', `${array[i].temp.night} K`);
+    createElem(tempBlock, 'div', `${array[i].temp.day}`, 'class: temp');
+    createElem(tempBlock, 'div', `${array[i].temp.night}`, 'class: temp');
   }
 }
 

@@ -29,37 +29,36 @@ function processingRequest(currentCityName) {
     .then(response => response.json())
     .then(response => {
       modifiedObj = response;
-      
+      modifiedObj.currentUnit = 'Kelvin';
+/*       modifiedObj.changeUnit = () => {
 
-      for (const key in modifiedObj.current) {
-        if (key == 'temp') {
-          console.log(true)
-        }
-        //console.log(key)
-      }
+      } */
 
-      console.log(modifiedObj);
+      rec(modifiedObj);
       deleteInfoFromTheSite()
-      addInfoIntoTheSite(response, currentCityName);
+      addInfoIntoTheSite(modifiedObj, currentCityName);
     })
 }
 
 function rec(obj) {
-  for (const key in object) {
-    if (key == 'temp') {
+  for (const key in obj) {
+    if (key == 'temp' || key  == 'feels_like' || key == 'dew_point') {
       if (typeof obj[key] != 'object') {
         obj[key] = obj[key] + ' K';
       } else {
-        for (const key in object) {
-          obj[key] = obj[key] + ' K';
+        for (const prop in obj[key]) {
+          obj[key][prop] = obj[key][prop] + ' K';
         }
       }
       
     } else if (Array.isArray(obj[key])) {
       for (const iterator of obj[key]) {
-        rec(iterator)
+        rec(iterator);
       }
-    } 
+
+    } else if(typeof obj[key] == 'object') {
+      rec(obj[key]);
+    }
   }
 }
 
@@ -82,14 +81,11 @@ function deleteInfoFromTheSite() {
 }
 
 btnUnits.addEventListener('mousedown', () => {
-  const tempArr = document.querySelectorAll('[data-units="K"]');
-/*   console.log(tempArr)
+  const tempArr = document.querySelectorAll('.temp');
+  
+  console.log(tempArr)
 
-  console.dir(btnUnits.textContent) */
-
-  if (btnUnits.textContent == 'K') {
-    btnUnits.textContent = '°C'
-  } else {
-    btnUnits.textContent = 'K'
+  if (modifiedObj.currentUnit == 'Kelvin') {
+    
   }
 })
