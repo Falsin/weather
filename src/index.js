@@ -8,11 +8,12 @@ const todayWeather = document.getElementById('todayWeather');
 const units = document.getElementById('units');
 
 const input = document.querySelector('input');
-const btn = document.querySelector('button');
+const searchBtn = document.getElementById('searchBtn');
 const btnUnits = units.querySelector('button');
 
 let mainObj = {
   currentUnit: 'Kelvin',
+  tempArrKeys: ['temp', 'feels_like', 'dew_point'],
 };
 
 mainObj.cnangeUnit = function (arr) {
@@ -39,7 +40,7 @@ mainObj.calcValue = function (arr) {
   }
 }
 
-btn.addEventListener('mousedown', () => {
+searchBtn.addEventListener('mousedown', () => {
   processingRequest(input.value);
 })
 
@@ -54,7 +55,7 @@ function processingRequest(currentCityName) {
     .then(response => {
       mainObj.modifiedObj = response;
 
-      rec(mainObj.modifiedObj);
+      rec(mainObj.modifiedObj, mainObj.tempArrKeys);
       deleteInfoFromTheSite()
       addInfoIntoTheSite(mainObj.modifiedObj, currentCityName);
       if (mainObj.currentUnit !== 'Kelvin') {
@@ -64,7 +65,29 @@ function processingRequest(currentCityName) {
     })
 }
 
-function rec(obj) {
+function rec(obj, conditionArray) {
+  for (const key in obj) {
+    if (conditionArray.includes(key)) {
+      if (typeof obj[key] != 'object') {
+        obj[key] = obj[key] + ' K';
+      } else {
+        for (const prop in obj[key]) {
+          obj[key][prop] = Math.round(obj[key][prop]) + ' K';
+        }
+      }
+      
+    } else if (Array.isArray(obj[key])) {
+      for (const iterator of obj[key]) {
+        rec(iterator, conditionArray);
+      }
+
+    } else if(typeof obj[key] == 'object') {
+      rec(obj[key], conditionArray);
+    }
+  }
+}
+
+/* function rec(obj) {
   for (const key in obj) {
     if (key == 'temp' || key  == 'feels_like' || key == 'dew_point') {
       if (typeof obj[key] != 'object') {
@@ -84,7 +107,7 @@ function rec(obj) {
       rec(obj[key]);
     }
   }
-}
+} */
 
 function returnCityCoord(currentCityName) {
   return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${currentCityName}&appid=7583fd4c80f1f8e75fe03f14d121ece0`, {mode: 'cors'})

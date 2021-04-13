@@ -1,6 +1,7 @@
 import createElem from 'create-html-node'
 
 const todayWeather = document.getElementById('todayWeather');
+const mainWeather = document.getElementById('mainWeather')
 
 function setTodayWeather(currentWeather, hourlyWeather, currentCityName) {
   const cityName = todayWeather.querySelector('h2');
