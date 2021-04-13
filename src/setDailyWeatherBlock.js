@@ -15,7 +15,7 @@ function setDailyWeather(array) {
 
   for (let i = 1; i < array.length; i++) {
     const table = dailyWeather.querySelector('table');
-    const tableLine = createElem(table, 'tr');
+    const tableLine = createElem(table, 'tr', 'class:tableLine');
     createElem(tableLine, 'td', `${daysArray[new Date(array[i].dt * 1000).getDay()]}`);
 
     const weatherIconCeil = createElem(tableLine, 'td');

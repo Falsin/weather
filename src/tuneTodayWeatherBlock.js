@@ -25,7 +25,7 @@ function createWeatherCell(parentElem, hour, array, temp) {
   createElem(elem, 'div', `${hour}`);
   const weatherImg = createElem(elem, 'div', 'class:weatherImg');
   weatherImg.style.backgroundImage = `url(http://openweathermap.org/img/wn/${array.weather[0].icon}@2x.png)`
-  createElem(elem, 'div', `${temp}`);
+  createElem(elem, 'div', `${temp}`, 'class:temp');
 }
 
 export default setTodayWeather

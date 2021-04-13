@@ -11,13 +11,17 @@ function setCommonInfo(obj) {
 
 
   for (let i = 0; i < commonInfoElements.length; i++) {
-    const units = commonInfoElements[i].dataset.units || '';
-    const childElem = createElem(commonInfoElements[i], 'span', 'class: temp');
-    childElem.textContent = `${obj[commonInfoElements[i].id]}`;
+    let objElem = obj[commonInfoElements[i].id];
 
+    const childElem = createElem(commonInfoElements[i], 'span', 'class:commonWeatherInfo');
+    childElem.textContent = `${objElem}`;
+
+
+    if (typeof objElem == 'string' && objElem.includes('K')) {
+      childElem.classList.add('temp')
+    }
   }
 
-  //console.log(obj)
 }
 
 export default setCommonInfo

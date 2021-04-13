@@ -11,9 +11,33 @@ const input = document.querySelector('input');
 const btn = document.querySelector('button');
 const btnUnits = units.querySelector('button');
 
-let modifiedObj;
+let mainObj = {
+  currentUnit: 'Kelvin',
+};
 
+mainObj.calcValue = function calcValue(arr) {
+  if (this.currentUnit !== 'Kelvin') {
+    arr.forEach(elem => {
+      let splitedString = elem.textContent.split(' ');
+      elem.textContent =  Math.round(+splitedString[0] - 273,15) + ' °С';
+    })
+  } else {
+    arr.forEach(elem => {
+      let splitedString = elem.textContent.split(' ');
+      elem.textContent =  Math.round(+splitedString[0] + 273,15) + ' K';
+    })
+  }
+}
 
+function cnangeUnit(arr) {
+  if (mainObj.currentUnit == 'Kelvin') {
+    mainObj.currentUnit = 'Celsius';
+    mainObj.calcValue(arr);
+  } else {
+    mainObj.currentUnit = 'Kelvin';
+    mainObj.calcValue(arr);
+  }
+}
 
 btn.addEventListener('mousedown', () => {
   processingRequest(input.value);
@@ -28,15 +52,15 @@ function processingRequest(currentCityName) {
     })
     .then(response => response.json())
     .then(response => {
-      modifiedObj = response;
-      modifiedObj.currentUnit = 'Kelvin';
-/*       modifiedObj.changeUnit = () => {
+      mainObj.modifiedObj = response;
 
-      } */
-
-      rec(modifiedObj);
+      rec(mainObj.modifiedObj);
       deleteInfoFromTheSite()
-      addInfoIntoTheSite(modifiedObj, currentCityName);
+      addInfoIntoTheSite(mainObj.modifiedObj, currentCityName);
+      if (mainObj.currentUnit !== 'Kelvin') {
+        const tempArr = document.querySelectorAll('.temp');
+        mainObj.calcValue(tempArr);
+      }
     })
 }
 
@@ -47,7 +71,7 @@ function rec(obj) {
         obj[key] = obj[key] + ' K';
       } else {
         for (const prop in obj[key]) {
-          obj[key][prop] = obj[key][prop] + ' K';
+          obj[key][prop] = Math.round(obj[key][prop]) + ' K';
         }
       }
       
@@ -76,16 +100,16 @@ function addInfoIntoTheSite(obj, currentCityName) {
 
 function deleteInfoFromTheSite() {
   const weatherIcons = todayWeather.querySelectorAll('.weatherIcons');
+  const commonWeatherInfo = document.querySelectorAll('.commonWeatherInfo');
+  const tableLines = document.querySelectorAll('.tableLine');
 
-  weatherIcons.forEach(elem => elem.remove())
+  weatherIcons.forEach(elem => elem.remove());
+  commonWeatherInfo.forEach(elem => elem.remove());
+  tableLines.forEach(elem => elem.remove());
 }
 
 btnUnits.addEventListener('mousedown', () => {
   const tempArr = document.querySelectorAll('.temp');
-  
-  console.log(tempArr)
 
-  if (modifiedObj.currentUnit == 'Kelvin') {
-    
-  }
+  cnangeUnit(tempArr)
 })
