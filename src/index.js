@@ -87,7 +87,7 @@ function rec(obj) {
 }
 
 function returnCityCoord(currentCityName) {
-  return fetch(`http://api.openweathermap.org/data/2.5/weather?q=${currentCityName}&appid=7583fd4c80f1f8e75fe03f14d121ece0`, {mode: 'cors'})
+  return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${currentCityName}&appid=7583fd4c80f1f8e75fe03f14d121ece0`, {mode: 'cors'})
     .then(response => response.json())
     .then(response => response.coord)
 }
