@@ -15,7 +15,17 @@ let mainObj = {
   currentUnit: 'Kelvin',
 };
 
-mainObj.calcValue = function calcValue(arr) {
+mainObj.cnangeUnit = function (arr) {
+  if (this.currentUnit == 'Kelvin') {
+    this.currentUnit = 'Celsius';
+    this.calcValue(arr);
+  } else {
+    this.currentUnit = 'Kelvin';
+    this.calcValue(arr);
+  }
+}
+
+mainObj.calcValue = function (arr) {
   if (this.currentUnit !== 'Kelvin') {
     arr.forEach(elem => {
       let splitedString = elem.textContent.split(' ');
@@ -26,16 +36,6 @@ mainObj.calcValue = function calcValue(arr) {
       let splitedString = elem.textContent.split(' ');
       elem.textContent =  Math.round(+splitedString[0] + 273,15) + ' K';
     })
-  }
-}
-
-function cnangeUnit(arr) {
-  if (mainObj.currentUnit == 'Kelvin') {
-    mainObj.currentUnit = 'Celsius';
-    mainObj.calcValue(arr);
-  } else {
-    mainObj.currentUnit = 'Kelvin';
-    mainObj.calcValue(arr);
   }
 }
 
@@ -109,7 +109,13 @@ function deleteInfoFromTheSite() {
 }
 
 btnUnits.addEventListener('mousedown', () => {
+  if (mainObj.currentUnit == 'Kelvin') {
+    btnUnits.textContent = '°С';
+  } else {
+    btnUnits.textContent = 'K';
+  }
+
   const tempArr = document.querySelectorAll('.temp');
 
-  cnangeUnit(tempArr)
+  mainObj.cnangeUnit(tempArr)
 })
