@@ -4,7 +4,7 @@
 }
 
 * {
-  border: solid red 1px;
+  //border: solid red 1px;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -15,7 +15,7 @@ body {
 }
 
 .container {
-  border: solid green 1px;
+  //border: solid green 1px;
   padding: 3vmin 5vmin;
   display: flex;
   flex-wrap: wrap;
@@ -63,34 +63,93 @@ header {
   }
 }
 
-#hourlyWeather {
-  display: flex;
-  width: 70%;
-  overflow-x: scroll;
+#todayWeather .container {
+  justify-content: space-between;
 
-  & > * {
-    padding-left: 50px;
-    padding-right: 50px;
+  & #currentWeather {
+    padding-left: 3vmin;
+    padding-right: 3vmin;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    & > * {
+      margin-bottom: 2vmin;
+    }
+
+    & #mainWeather,
+    & .temp {
+      font-size: 1.4em
+    }
   }
-}
 
-.weatherImg {
-  .size(60px, 60px);
-  background-position: center center;
-  background-size: contain;
+  & #hourlyWeather {
+    display: flex;
+    width: 70%;
+    overflow-x: scroll;
+    padding-top: 2vmin;
+    padding-bottom: 2vmin;
+  
+    & > * {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    & .weatherIcons {
+
+      & > * {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      & .weatherImg {
+        .size(60px, 60px);
+        background: hsl(0, 0%, 80%);
+        background-position: center center;
+        background-size: contain;
+        margin-top: 3vmin;
+        margin-bottom: 3vmin;
+      }
+    }
+  }
 }
 
 #commonInfo .container {
   display: flex;
   flex-direction: column;
+  background: hsl(0, 0%, 12%);
+  color: white;
 
   & > div {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 
     & > div {
       width: 17vmin;
+      display: flex;
+      flex-direction: column;
+
+      & > * {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+      }
+
+      & h4 {
+        margin-bottom: 1vmin;
+      }
+
+      & span {
+        margin-top: auto;
+      }
+
     }
+  }
+
+  & > div:first-of-type {
+    margin-bottom: 2vmin;
   }
 }
 
@@ -98,9 +157,11 @@ header {
   
   & table {
     width: 100%;
+    text-align: center;
 
     & img {
-      .size(10vmin, 10vmin)
+      .size(10vmin, 10vmin);
+      background: hsl(0, 0%, 80%);
     }
   }
 }
@@ -110,6 +171,10 @@ header {
     & #units {
       width: 100%;
       margin-top: 2vmin;
+
+      & button {
+        padding: 1vmin;
+      }
     }
 
     & #hourlyWeather {
@@ -125,13 +190,38 @@ header {
     }
   }
 
+  #todayWeather .container {
+
+    & #currentWeather {
+      width: 100%;
+    }
+
+    & #hourlyWeather {
+      width: 100%;
+    }
+  }
+
   #commonInfo .container {
     flex-direction: row;
     justify-content: space-evenly;
 
     & div {
       flex-direction: column;
+
+      & > div {
+        width: 25vmin;
+      }
+
+      & > div:not(:last-of-type) {
+        margin-bottom: 2vmin;
+      }
     }
+
+    & > div:first-of-type {
+      margin-bottom: 0;
+    }
+
+
   }
 }
 
@@ -148,6 +238,16 @@ header {
 
     & #siteHeadline {
       font-size: 4vmin;
+    }
+  }
+
+  #commonInfo .container {
+    
+    & div {
+
+      & > div {
+        width: 35vmin;
+      }
     }
   }
 }

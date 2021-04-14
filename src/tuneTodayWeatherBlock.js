@@ -4,7 +4,7 @@ const todayWeather = document.getElementById('todayWeather');
 const mainWeather = document.getElementById('mainWeather')
 
 function setTodayWeather(currentWeather, hourlyWeather, currentCityName) {
-  const cityName = todayWeather.querySelector('h2');
+  const cityName = todayWeather.querySelector('h1');
   const temp = todayWeather.querySelector('.temp');
   const hourlyWeatherBlock = document.getElementById('hourlyWeather');
 

@@ -1,5 +1,4 @@
 * {
-  border: solid red 1px;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -8,7 +7,6 @@ body {
   font-size: 16px;
 }
 .container {
-  border: solid green 1px;
   padding: 3vmin 5vmin;
   display: flex;
   flex-wrap: wrap;
@@ -47,43 +45,94 @@ header .container #units {
 header .container #units button {
   flex-grow: 1;
 }
-#hourlyWeather {
+#todayWeather .container {
+  justify-content: space-between;
+}
+#todayWeather .container #currentWeather {
+  padding-left: 3vmin;
+  padding-right: 3vmin;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#todayWeather .container #currentWeather > * {
+  margin-bottom: 2vmin;
+}
+#todayWeather .container #currentWeather #mainWeather,
+#todayWeather .container #currentWeather .temp {
+  font-size: 1.4em;
+}
+#todayWeather .container #hourlyWeather {
   display: flex;
   width: 70%;
   overflow-x: scroll;
+  padding-top: 2vmin;
+  padding-bottom: 2vmin;
 }
-#hourlyWeather > * {
-  padding-left: 50px;
-  padding-right: 50px;
+#todayWeather .container #hourlyWeather > * {
+  padding-left: 30px;
+  padding-right: 30px;
 }
-.weatherImg {
+#todayWeather .container #hourlyWeather .weatherIcons > * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#todayWeather .container #hourlyWeather .weatherIcons .weatherImg {
   width: 60px;
   height: 60px;
+  background: hsl(0, 0%, 80%);
   background-position: center center;
   background-size: contain;
+  margin-top: 3vmin;
+  margin-bottom: 3vmin;
 }
 #commonInfo .container {
   display: flex;
   flex-direction: column;
+  background: hsl(0, 0%, 12%);
+  color: white;
 }
 #commonInfo .container > div {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 #commonInfo .container > div > div {
   width: 17vmin;
+  display: flex;
+  flex-direction: column;
+}
+#commonInfo .container > div > div > * {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+#commonInfo .container > div > div h4 {
+  margin-bottom: 1vmin;
+}
+#commonInfo .container > div > div span {
+  margin-top: auto;
+}
+#commonInfo .container > div:first-of-type {
+  margin-bottom: 2vmin;
 }
 #dailyWeather .container table {
   width: 100%;
+  text-align: center;
 }
 #dailyWeather .container table img {
   width: 10vmin;
   height: 10vmin;
+  background: hsl(0, 0%, 80%);
 }
 @media screen and (max-width: 580px) {
   header .container #units {
     width: 100%;
     margin-top: 2vmin;
+  }
+  header .container #units button {
+    padding: 1vmin;
   }
   header .container #hourlyWeather {
     width: 100%;
@@ -94,12 +143,27 @@ header .container #units button {
   header .container #siteHeadline {
     font-size: 3.5vmin;
   }
+  #todayWeather .container #currentWeather {
+    width: 100%;
+  }
+  #todayWeather .container #hourlyWeather {
+    width: 100%;
+  }
   #commonInfo .container {
     flex-direction: row;
     justify-content: space-evenly;
   }
   #commonInfo .container div {
     flex-direction: column;
+  }
+  #commonInfo .container div > div {
+    width: 25vmin;
+  }
+  #commonInfo .container div > div:not(:last-of-type) {
+    margin-bottom: 2vmin;
+  }
+  #commonInfo .container > div:first-of-type {
+    margin-bottom: 0;
   }
 }
 @media screen and (max-width: 450px) {
@@ -112,5 +176,8 @@ header .container #units button {
   }
   header .container #siteHeadline {
     font-size: 4vmin;
+  }
+  #commonInfo .container div > div {
+    width: 35vmin;
   }
 }
