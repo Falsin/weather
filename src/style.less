@@ -4,7 +4,7 @@
 }
 
 * {
-  //border: solid red 1px;
+  border: solid red 1px;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -15,7 +15,7 @@ body {
 }
 
 .container {
-  //border: solid green 1px;
+  border: solid green 1px;
   padding: 3vmin 5vmin;
   display: flex;
   flex-wrap: wrap;
@@ -158,10 +158,19 @@ header {
   & table {
     width: 100%;
     text-align: center;
+    border-collapse: collapse;
+    border-spacing: 0;
 
     & img {
       .size(10vmin, 10vmin);
       background: hsl(0, 0%, 80%);
+      margin-top: 1.5vmin;
+      margin-bottom: 1vmin;
+    }
+
+    & td,
+    & th {
+      border-bottom: gray solid 1px;
     }
   }
 }

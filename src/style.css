@@ -1,4 +1,5 @@
 * {
+  border: solid red 1px;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -7,6 +8,7 @@ body {
   font-size: 16px;
 }
 .container {
+  border: solid green 1px;
   padding: 3vmin 5vmin;
   display: flex;
   flex-wrap: wrap;
@@ -120,11 +122,19 @@ header .container #units button {
 #dailyWeather .container table {
   width: 100%;
   text-align: center;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 #dailyWeather .container table img {
   width: 10vmin;
   height: 10vmin;
   background: hsl(0, 0%, 80%);
+  margin-top: 1.5vmin;
+  margin-bottom: 1vmin;
+}
+#dailyWeather .container table td,
+#dailyWeather .container table th {
+  border-bottom: gray solid 1px;
 }
 @media screen and (max-width: 580px) {
   header .container #units {
