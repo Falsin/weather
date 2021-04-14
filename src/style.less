@@ -10,50 +10,56 @@
   margin: 0;
 }
 
-html, body {
-  background: #ffa500;
-}
-
 body {
   font-size: 16px;
 }
 
 .container {
   border: solid green 1px;
-  padding-left: 5vmin;
-  padding-right: 5vmin;
+  padding: 3vmin 5vmin;
   display: flex;
   flex-wrap: wrap;
 }
 
-.container #searchBox {
-  border: solid green 1px;
-  width: 50%;
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
+header {
+  background: hsl(0, 0%, 12%);
+  color: white;
 
-  & input {
-    flex-grow: 1;
-    min-width: 0;
-    padding-left: 1vmin;
-  }
+  & .container {
+    justify-content: space-between;
+    
+    & #searchBox {
+      width: 50%;
+      display: flex;
+    
+      & input {
+        flex-grow: 1;
+        min-width: 0;
+        padding-left: 1vmin;
+      }
+    
+      & button {
+        padding: 1vmin;
+      }
+    }
 
-  & button {
-    padding: 1vmin;
-  }
-}
+    & #siteHeadline {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30vmin;
+      font-weight: 900;
+      font-size: 3vmin;
+    }
 
-.container #siteHeadline {
-  width: 30vmin;
-}
-
-.container #units {
-  width: 10vmin;
-  display: flex;
-
-  & button {
-    flex-grow: 1;
+    & #units {
+      width: 10vmin;
+      display: flex;
+    
+      & button {
+        flex-grow: 1;
+      }
+    }
   }
 }
 
@@ -99,15 +105,29 @@ body {
   }
 }
 
-@media screen and (max-width: 540px){
-  .container #units,
-  #hourlyWeather {
-    width: 100%;
+@media screen and (max-width: 580px){
+  header .container {
+    & #units {
+      width: 100%;
+      margin-top: 2vmin;
+    }
+
+    & #hourlyWeather {
+      width: 100%;
+    }
+
+    & #searchBox {
+      width: 60%;
+    }
+
+    & #siteHeadline {
+      font-size: 3.5vmin;
+    }
   }
+
   #commonInfo .container {
     flex-direction: row;
     justify-content: space-evenly;
-
 
     & div {
       flex-direction: column;
@@ -115,9 +135,19 @@ body {
   }
 }
 
-@media screen and (max-width: 300px){
-  .container #siteHeadline,
-  .container #searchBox {
-    width: 100%;
+@media screen and (max-width: 450px){
+  header .container {
+    & #siteHeadline {
+      width: 100%;
+    }
+
+    & #searchBox {
+      margin-top: 2vmin;
+      width: 100%;
+    }
+
+    & #siteHeadline {
+      font-size: 4vmin;
+    }
   }
 }

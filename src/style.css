@@ -4,43 +4,47 @@
   padding: 0;
   margin: 0;
 }
-html,
-body {
-  background: #ffa500;
-}
 body {
   font-size: 16px;
 }
 .container {
   border: solid green 1px;
-  padding-left: 5vmin;
-  padding-right: 5vmin;
+  padding: 3vmin 5vmin;
   display: flex;
   flex-wrap: wrap;
 }
-.container #searchBox {
-  border: solid green 1px;
+header {
+  background: hsl(0, 0%, 12%);
+  color: white;
+}
+header .container {
+  justify-content: space-between;
+}
+header .container #searchBox {
   width: 50%;
   display: flex;
-  margin-left: auto;
-  margin-right: auto;
 }
-.container #searchBox input {
+header .container #searchBox input {
   flex-grow: 1;
   min-width: 0;
   padding-left: 1vmin;
 }
-.container #searchBox button {
+header .container #searchBox button {
   padding: 1vmin;
 }
-.container #siteHeadline {
+header .container #siteHeadline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 30vmin;
+  font-weight: 900;
+  font-size: 3vmin;
 }
-.container #units {
+header .container #units {
   width: 10vmin;
   display: flex;
 }
-.container #units button {
+header .container #units button {
   flex-grow: 1;
 }
 #hourlyWeather {
@@ -76,10 +80,19 @@ body {
   width: 10vmin;
   height: 10vmin;
 }
-@media screen and (max-width: 540px) {
-  .container #units,
-  #hourlyWeather {
+@media screen and (max-width: 580px) {
+  header .container #units {
     width: 100%;
+    margin-top: 2vmin;
+  }
+  header .container #hourlyWeather {
+    width: 100%;
+  }
+  header .container #searchBox {
+    width: 60%;
+  }
+  header .container #siteHeadline {
+    font-size: 3.5vmin;
   }
   #commonInfo .container {
     flex-direction: row;
@@ -89,9 +102,15 @@ body {
     flex-direction: column;
   }
 }
-@media screen and (max-width: 300px) {
-  .container #siteHeadline,
-  .container #searchBox {
+@media screen and (max-width: 450px) {
+  header .container #siteHeadline {
     width: 100%;
+  }
+  header .container #searchBox {
+    margin-top: 2vmin;
+    width: 100%;
+  }
+  header .container #siteHeadline {
+    font-size: 4vmin;
   }
 }
