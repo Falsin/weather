@@ -30,6 +30,7 @@ function setTodayWeather(currentWeather, hourlyWeather, currentCityName) {
 function createWeatherCell(parentElem, hour, array, temp) {
   const elem = createElem(parentElem, 'div', 'class:weatherIcons');
   createElem(elem, 'div').textContent = `${hour}`;
+  
   const weatherImg = createElem(elem, 'div', 'class:weatherImg');
   weatherImg.style.backgroundImage = `url(http://openweathermap.org/img/wn/${array.weather[0].icon}@2x.png)`
   createElem(elem, 'div', `${temp}`, 'class:temp');

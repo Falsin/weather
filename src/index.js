@@ -3,17 +3,19 @@ import setTodayWeather from './tuneTodayWeatherBlock'
 import setCommonInfo from './setCommonInfo'
 import setDailyWeather from './setDailyWeatherBlock'
 
-
 const todayWeather = document.getElementById('todayWeather');
 const units = document.getElementById('units');
+const searchBtn = document.getElementById('searchBtn');
 
 const input = document.querySelector('input');
-const searchBtn = document.getElementById('searchBtn');
 const btnUnits = units.querySelector('button');
 
 let mainObj = {
   currentUnit: 'Kelvin',
   tempArrKeys: ['temp', 'feels_like', 'dew_point'],
+  percentArrKeys: ['clouds', 'humidity'],
+  pressureArrKeys: ['pressure'],
+  visibilityArrKeys: ['visibility'],
 };
 
 mainObj.cnangeUnit = function (arr) {
@@ -40,9 +42,15 @@ mainObj.calcValue = function (arr) {
   }
 }
 
-searchBtn.addEventListener('mousedown', () => {
-  processingRequest(input.value);
-})
+mainObj.changeFormatValues = function () {
+  let that = this.modifiedObj.current;
+
+  that.sunrise = `${new Date(that.sunrise * 1000).getHours()}:${new Date(that.sunrise * 1000).getMinutes()}`;
+  that.sunset = `${new Date(that.sunset * 1000).getHours()}:${new Date(that.sunset * 1000).getMinutes()}`;
+  that.visibility = `${that.visibility / 1000}`;
+}
+
+searchBtn.addEventListener('mousedown', () => processingRequest(input.value))
 
 window.onload = () => processingRequest('London');
 
@@ -55,9 +63,16 @@ function processingRequest(currentCityName) {
     .then(response => {
       mainObj.modifiedObj = response;
 
-      rec(mainObj.modifiedObj, mainObj.tempArrKeys);
+      mainObj.changeFormatValues()
+
+      rec(mainObj.modifiedObj, mainObj.tempArrKeys, 'K');
+      rec(mainObj.modifiedObj, mainObj.percentArrKeys, '%');
+      rec(mainObj.modifiedObj, mainObj.pressureArrKeys, 'hPa');
+      rec(mainObj.modifiedObj, mainObj.visibilityArrKeys, 'km');
+
       deleteInfoFromTheSite()
       addInfoIntoTheSite(mainObj.modifiedObj, currentCityName);
+
       if (mainObj.currentUnit !== 'Kelvin') {
         const tempArr = document.querySelectorAll('.temp');
         mainObj.calcValue(tempArr);
@@ -65,49 +80,27 @@ function processingRequest(currentCityName) {
     })
 }
 
-function rec(obj, conditionArray) {
+function rec(obj, conditionArray, unit) {
   for (const key in obj) {
     if (conditionArray.includes(key)) {
       if (typeof obj[key] != 'object') {
-        obj[key] = obj[key] + ' K';
+        obj[key] = Math.round(+obj[key]) + ` ${unit}`;
       } else {
         for (const prop in obj[key]) {
-          obj[key][prop] = Math.round(obj[key][prop]) + ' K';
+          obj[key][prop] = Math.round(+obj[key][prop]) + ` ${unit}`;
         }
       }
       
     } else if (Array.isArray(obj[key])) {
       for (const iterator of obj[key]) {
-        rec(iterator, conditionArray);
+        rec(iterator, conditionArray, unit);
       }
 
     } else if(typeof obj[key] == 'object') {
-      rec(obj[key], conditionArray);
+      rec(obj[key], conditionArray, unit);
     }
   }
 }
-
-/* function rec(obj) {
-  for (const key in obj) {
-    if (key == 'temp' || key  == 'feels_like' || key == 'dew_point') {
-      if (typeof obj[key] != 'object') {
-        obj[key] = obj[key] + ' K';
-      } else {
-        for (const prop in obj[key]) {
-          obj[key][prop] = Math.round(obj[key][prop]) + ' K';
-        }
-      }
-      
-    } else if (Array.isArray(obj[key])) {
-      for (const iterator of obj[key]) {
-        rec(iterator);
-      }
-
-    } else if(typeof obj[key] == 'object') {
-      rec(obj[key]);
-    }
-  }
-} */
 
 function returnCityCoord(currentCityName) {
   return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${currentCityName}&appid=7583fd4c80f1f8e75fe03f14d121ece0`, {mode: 'cors'})
@@ -132,13 +125,7 @@ function deleteInfoFromTheSite() {
 }
 
 btnUnits.addEventListener('mousedown', () => {
-  if (mainObj.currentUnit == 'Kelvin') {
-    btnUnits.textContent = '°С';
-  } else {
-    btnUnits.textContent = 'K';
-  }
-
+  btnUnits.textContent = (mainObj.currentUnit == 'Kelvin') ? '°С' : 'K';
   const tempArr = document.querySelectorAll('.temp');
-
   mainObj.cnangeUnit(tempArr)
 })

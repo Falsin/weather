@@ -22,7 +22,7 @@ function setDailyWeather(array) {
     const weatherIcon = createElem(weatherIconCeil, 'img');
     weatherIcon.src = `http://openweathermap.org/img/wn/${array[i].weather[0].icon}@2x.png`;
 
-    createElem(tableLine, 'td', `${array[i].humidity} %`);
+    createElem(tableLine, 'td', `${array[i].humidity}`);
 
     const tempBlock = createElem(tableLine, 'td');
     createElem(tempBlock, 'div', `${array[i].temp.day}`, 'class: temp');
